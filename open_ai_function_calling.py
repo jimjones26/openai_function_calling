@@ -118,3 +118,6 @@ second_completion = client.chat.completions.create(
     ],
     functions=function_descriptions,
 )
+
+response = second_completion.choices[0].message.content
+print(response)
