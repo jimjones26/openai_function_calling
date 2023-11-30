@@ -73,3 +73,30 @@ completetion = client.chat.completions.create(
 
 output = completetion.choices[0].message
 print(output)
+
+# ------------------------------------------------------------------
+# Add a function
+# ------------------------------------------------------------------
+
+
+def get_flight_info(loc_origin, loc_destination):
+    """Get flight information between two locations."""
+
+    flight_info = {
+        "loc_origin": loc_origin,
+        "loc_destination": loc_destination,
+        "datetime": str(datetime.now() + timedelta(hours=2)),
+        "airline": "KLM",
+        "flight": "KL123",
+    }
+
+    return json.dumps(flight_info)
+
+
+origin = json.loads(output.function_call.arguments).get("loc_origin")
+destination = json.loads(output.function_call.arguments).get("loc_destination")
+params = json.loads(output.function_call.arguments)
+
+print(origin)
+print(destination)
+print(params)
