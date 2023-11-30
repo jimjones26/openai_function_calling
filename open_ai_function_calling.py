@@ -105,3 +105,16 @@ chosen_function = eval(output.function_call.name)
 flight = chosen_function(**params)
 
 print(flight)
+
+# ------------------------------------------------------------------
+# Add function result to prompt for final answer
+# ------------------------------------------------------------------
+
+second_completion = client.chat.completions.create(
+    model="gpt-3.5-turbo-1106",
+    messages=[
+        {"role": "user", "content": user_prompt},
+        {"role": "function", "name": output.function_call.name, "content": flight},
+    ],
+    functions=function_descriptions,
+)
