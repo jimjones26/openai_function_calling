@@ -100,3 +100,8 @@ params = json.loads(output.function_call.arguments)
 print(origin)
 print(destination)
 print(params)
+
+chosen_function = eval(output.function_call.name)
+flight = chosen_function(**params)
+
+print(flight)
