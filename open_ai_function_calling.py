@@ -237,3 +237,42 @@ print(ask_and_reply(user_prompt))
 # Scenario 3: File a complaint
 user_prompt = "This is John Doe, I want to file a complaint about my missed flight. It was an unpleasant suprise to find out that my flight was cancelled. Email me a copy of the complaint to john@doe.com."
 print(ask_and_reply(user_prompt))
+
+# ------------------------------------------------------------------
+# Make it conversational with langchain
+# ------------------------------------------------------------------
+llm = ChatOpenAI(model="gpt-3.5-turbo-1106", temperature=0)
+
+# start conversation with multiple requests
+user_prompt = """"
+This is Jane Harris. I am an unhappy customer that wants you to do several things.
+First, I need to know when the next flight from Amsterdam to New York is.
+Please proceed to book that flight for me.
+Also, I want to file a complaint about my missed flight. It was an unpleasant suprise to find out that my flight was cancelled.
+Email me a copy of the complaint to jharris@email.com.
+Please give me confirmation after you have done all of these things.
+"""
+
+# Returns the function of the first request
+first_response = llm.predict_messages(
+    [HumanMessage(content=user_prompt)], functions=function_descriptions_multiple
+)
+print(first_response)
+
+# Returns the function of the second request
+second_response = llm.predict_messages(
+    [
+        HumanMessage(content=user_prompt),
+        AIMessage(content=str(first_response.additional_kwargs)),
+        AIMessage(
+            role="function",
+            additional_kwargs={
+                "name": first_response.additional_kwargs["function_call"]["name"],
+            },
+            content=f"Completed Function {first_response.additional_kwargs['function_call']['name']}",
+        ),
+    ],
+    functions=function_descriptions_multiple,
+)
+
+print(second_response)
