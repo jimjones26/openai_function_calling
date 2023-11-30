@@ -229,3 +229,7 @@ flight_airline = json.loads(flight).get("airline")
 
 print(flight_datetime)
 print(flight_airline)
+
+# Scenario 2: Book a new flight
+user_prompt = f"I want to book a flight from {origin} to {destination} on {flight_datetime} with {flight_airline}."
+print(ask_and_reply(user_prompt))
