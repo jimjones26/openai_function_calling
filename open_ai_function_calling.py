@@ -233,3 +233,7 @@ print(flight_airline)
 # Scenario 2: Book a new flight
 user_prompt = f"I want to book a flight from {origin} to {destination} on {flight_datetime} with {flight_airline}."
 print(ask_and_reply(user_prompt))
+
+# Scenario 3: File a complaint
+user_prompt = "This is John Doe, I want to file a complaint about my missed flight. It was an unpleasant suprise to find out that my flight was cancelled. Email me a copy of the complaint to john@doe.com."
+print(ask_and_reply(user_prompt))
