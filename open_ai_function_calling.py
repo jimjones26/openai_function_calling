@@ -209,3 +209,23 @@ def ask_and_reply(prompt):
 
     output = completetion.choices[0].message
     return output
+
+
+# Scenario 1: Ask for flight information
+user_prompt = "What is the next flight from Amsterdam to New York?"
+print(ask_and_reply(user_prompt))
+
+origin = json.loads(output.function_call.arguments).get("loc_origin")
+destination = json.loads(output.function_call.arguments).get("loc_destination")
+chosen_function = eval(output.function_call.name)
+flight = chosen_function(origin, destination)
+
+print(origin)
+print(destination)
+print(flight)
+
+flight_datetime = json.loads(flight).get("datetime")
+flight_airline = json.loads(flight).get("airline")
+
+print(flight_datetime)
+print(flight_airline)
