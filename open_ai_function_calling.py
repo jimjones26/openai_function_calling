@@ -4,7 +4,9 @@
 
 import os
 import json
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -16,4 +18,21 @@ from langchain.schema import HumanMessage, AIMessage, ChatMessage
 # ------------------------------------------------------------------
 
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+
+# ------------------------------------------------------------------
+# Ask ChatGPT a question
+# ------------------------------------------------------------------
+
+completetion = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {
+            "role": "user",
+            "content": "What is the next flight from Amsterdam to New York?",
+        }
+    ],
+)
+
+output = completetion.choices[0].message.content
+print(output)
