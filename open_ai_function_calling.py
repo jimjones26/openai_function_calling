@@ -276,3 +276,22 @@ second_response = llm.predict_messages(
 )
 
 print(second_response)
+
+# Returns the function of the third request
+third_response = llm.predict_messages(
+    [
+        HumanMessage(content=user_prompt),
+        AIMessage(content=str(first_response.additional_kwargs)),
+        AIMessage(content=str(second_response.additional_kwargs)),
+        AIMessage(
+            role="function",
+            additional_kwargs={
+                "name": second_response.additional_kwargs["function_call"]["name"],
+            },
+            content=f"Completed Function {second_response.additional_kwargs['function_call']['name']}",
+        ),
+    ],
+    functions=function_descriptions_multiple,
+)
+
+print(third_response)
