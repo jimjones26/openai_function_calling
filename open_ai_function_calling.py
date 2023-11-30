@@ -121,3 +121,78 @@ second_completion = client.chat.completions.create(
 
 response = second_completion.choices[0].message.content
 print(response)
+
+# ------------------------------------------------------------------
+# Include multiple functions
+# ------------------------------------------------------------------
+
+function_descriptions_multiple = [
+    {
+        "name": "get_flight_info",
+        "description": "Get flight information between two locations.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "loc_origin": {
+                    "type": "string",
+                    "description": "The departure airport, e.g. DUS",
+                },
+                "loc_destination": {
+                    "type": "string",
+                    "description": "The destination airport, e.g. HAM",
+                },
+            },
+            "required": ["loc_origin", "loc_destination"],
+        },
+    },
+    {
+        "name": "book_flight",
+        "description": "Book a flight based on flight information.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "loc_origin": {
+                    "type": "string",
+                    "description": "The departure airport, e.g. DUS",
+                },
+                "loc_destination": {
+                    "type": "string",
+                    "description": "The destination airport, e.g. HAM",
+                },
+                "datetime": {
+                    "type": "string",
+                    "description": "The date and time of the flight, e.g. 2021-07-01T15:00:00",
+                },
+                "airline": {
+                    "type": "string",
+                    "description": "The service airline, e.g. Lufthansa",
+                },
+            },
+            "required": ["loc_origin", "loc_destination"],
+        },
+    },
+    {
+        "name": "file_complaint",
+        "description": "File a complaint as a customer.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the user, e.g. John Doe",
+                },
+                "email": {
+                    "type": "string",
+                    "description": "The email address of the user, e.g. address@mail.com",
+                },
+                "text": {
+                    "type": "string",
+                    "description": "Description of the complaint, e.g. The flight was delayed.",
+                },
+            },
+            "required": ["name", "email", "text"],
+        },
+    },
+]
+
+print(function_descriptions_multiple)
