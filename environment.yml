@@ -1,4 +1,4 @@
-name: explore-pandas-agent
+name: openai_function_calling
 channels:
   - defaults
 dependencies:
