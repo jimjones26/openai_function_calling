@@ -61,3 +61,15 @@ function_descriptions = [
         },
     }
 ]
+
+user_prompt = "What is the next flight from Amsterdam to New York?"
+
+completetion = client.chat.completions.create(
+    model="gpt-3.5-turbo-1106",
+    messages=[{"role": "user", "content": user_prompt}],
+    functions=function_descriptions,
+    function_call="auto",
+)
+
+output = completetion.choices[0].message
+print(output)
