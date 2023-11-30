@@ -196,3 +196,16 @@ function_descriptions_multiple = [
 ]
 
 print(function_descriptions_multiple)
+
+
+def ask_and_reply(prompt):
+    """Give LLM a given prompt and get a response."""
+    completetion = client.chat.completions.create(
+        model="gpt-3.5-turbo-1106",
+        messages=[{"role": "user", "content": prompt}],
+        functions=function_descriptions_multiple,
+        function_call="auto",
+    )
+
+    output = completetion.choices[0].message
+    return output
